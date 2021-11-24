@@ -3,5 +3,5 @@ exports.initial = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  res.send(`Nome do cliente e ${req.body.name}`);
+  res.send(`Nome do cliente e ${req.body.client}`);
 };

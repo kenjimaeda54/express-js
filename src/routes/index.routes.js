@@ -1,7 +1,7 @@
 const app = require("express");
 const route = app.Router();
-const home = require("../controllers/home");
-const contact = require("../controllers/contact");
+const home = require("../controllers/homeController");
+const contact = require("../controllers/contactController");
 
 // GET /
 route.get("/", home.initial);
