@@ -17,8 +17,23 @@ mongoose
 
 const route = require("./src/routes/index.routes");
 const path = require("path");
-const { globalMiddleware } = require("./src/middleware/index");
+const {
+  globalMiddleware,
+  errorCsurf,
+  valueToken,
+} = require("./src/middleware/index");
+//helmet nao e aconselhavel rodar em localhost
+// const helmet = require("helmet");
+const csurf = require("csurf");
 
+//helmet é uma pratica de segurança que nos ajuda a proteger nossa aplicação
+//em aplicativos com express
+
+// app.use(helmet());
+
+//permite que o express entenda json
+app.use(express.json());
+//permite que o express poste arquivos
 app.use(express.urlencoded({ extended: true }));
 
 //criando nossa sessao; ela e salva no banco de dados mongo
@@ -37,13 +52,6 @@ const sessionOptions = session({
 app.use(sessionOptions);
 app.use(flash());
 
-//middleware
-//middleware sao possiveis interceptar as rotas,app.use normalmente
-//sao middleware, express e baseado tudo em middleware
-//desta forma todas minhas rotas passam no middleware,
-//se eu possuir 15 rotas serao acessadas 15 vezes o middleware
-app.use(globalMiddleware);
-
 //------
 //pasta estatica aonde fica css,imagens,bundle
 app.use(express.static(path.resolve(__dirname, "public")));
@@ -59,6 +67,18 @@ app.set("view engine", "ejs");
 
 //---------------------
 
+//e para que o usuario nao possa fazer ataques de força bruta
+//errorCsurf e um middleware que eu criei
+app.use(csurf());
+//middleware
+//middleware sao possiveis interceptar as rotas,app.use normalmente
+//sao middleware, express e baseado tudo em middleware
+//desta forma todas minhas rotas passam no middleware,
+//se eu possuir 15 rotas serao acessadas 15 vezes o middleware
+//esse midleware precisa estar abaixo da verificacao app.use(csurf())
+app.use(errorCsurf);
+app.use(valueToken);
+app.use(globalMiddleware);
 app.use(route);
 
 app.on("appStarted", () => {

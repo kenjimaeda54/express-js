@@ -1,13 +1,11 @@
 const app = require("express");
 const route = app.Router();
 const home = require("../controllers/homeController");
-const contact = require("../controllers/contactController");
+const login = require("../controllers/loginController");
 
 // GET /
-route.get("/", home.initial);
-route.post("/", home.create);
+route.get("/", home.index);
 
-// GET / contact
-route.get("/contact", contact.home);
+route.get("/login", login.index);
 
 module.exports = route;
