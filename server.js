@@ -21,6 +21,22 @@ const { globalMiddleware } = require("./src/middleware/index");
 
 app.use(express.urlencoded({ extended: true }));
 
+//criando nossa sessao; ela e salva no banco de dados mongo
+// no maxAge determino quanto tempo ela vai durar
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const flash = require("connect-flash");
+
+const sessionOptions = session({
+  secret: "343434343 snfodfndson 2131231231 abc",
+  store: MongoStore.create({ mongoUrl: process.env.CONECTSTRING }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true },
+});
+app.use(sessionOptions);
+app.use(flash());
+
 //middleware
 //middleware sao possiveis interceptar as rotas,app.use normalmente
 //sao middleware, express e baseado tudo em middleware

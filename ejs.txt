@@ -1,0 +1,13 @@
+<% Controle de fluxo  %>
+<%= Imprime escapando caracter,vai pegar exatamente oque voce escreveu   %>
+<%- Imprime sem escapar caracter se colocar html vai exibir %>
+<%# Cometario %>
+<%- include('Caminho do arquivo') ; %>
+<% if(alguma coisa)  { /%>
+    
+    <%= vou imprimir sem escapar %>
+
+<% } else { %>
+
+
+<% } %>
