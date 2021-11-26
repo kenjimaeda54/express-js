@@ -17,6 +17,30 @@ class Login {
     this.erros = [];
     this.users = null;
   }
+
+  async singIn() {
+    this.validate();
+    if (this.erros.length > 0) return;
+    this.user = await LoginModel.findOne({ email: this.body.email });
+    if (!this.user) {
+      this.erros.push("Usuário não existe");
+      return;
+    }
+
+    //bcryptjs.compareSync espera no primerio parametro o valor
+    //que vamos comparar e no segundo espera o valor que esta
+    //no banco de dados com hash
+    const validate = await bcryptjs.compareSync(
+      this.body.password,
+      this.user.password
+    );
+    if (!validate) {
+      this.erros.push("Senha incorreta");
+      this.user = null;
+      return;
+    }
+  }
+
   async register() {
     this.validate();
     //esta linha estou garantindo que se houver erro
@@ -24,14 +48,11 @@ class Login {
     if (this.erros.length > 0) return;
     this.haveUser();
     if (this.erros.length > 0) return;
-    try {
-      //com salt eu vou fazer um hash da senha
-      const salt = await bcryptjs.genSaltSync();
-      this.body.password = await bcryptjs.hashSync(this.body.password, salt);
-      this.users = await LoginModel.create(this.body);
-    } catch (e) {
-      console.log(e);
-    }
+
+    //com salt eu vou fazer um hash da senha
+    const salt = await bcryptjs.genSaltSync();
+    this.body.password = await bcryptjs.hashSync(this.body.password, salt);
+    this.users = await LoginModel.create(this.body);
   }
 
   validate() {
