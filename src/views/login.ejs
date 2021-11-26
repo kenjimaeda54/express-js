@@ -6,18 +6,21 @@
     <div class="col-lg-8 my-3">
       <h1 class="text-center">Login ou Registro</h1>
       <p class="text-center lead">Faca login ou registro abaixo</p>
+      <%- include("../includes/mensagens") %>
       <div class="row">
         <div class="col-lg">
           <h4>Faca seu cadastro</h4>
           <p>Se voce ainda nao possui conta preencha o formulario abaixo</p>
           <form action="/login/singRegister" method="post">
+            <!-- este campo fica abaixo do form para validar o csrf -->
+            <input type="hidden" name="_csrf" value="<%= token  %>" />
             <div class="form-group">
               <label>Email </label>
               <input type="email" class="formControl" name="email" />
             </div>
             <div class="form-group">
               <label>Senha </label>
-              <input type="email" class="formControl" name="email" />
+              <input type="text" class="formControl" name="password" />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -26,13 +29,14 @@
           <h4>Entrar no sistema</h4>
           <p>Preencha para entrar no sitema</p>
           <form action="/login/singIn" method="post">
+            <input type="hidden" name="_csrf" value="<%= token  %>" />
             <div class="form-group">
               <label>Email </label>
               <input type="email" class="formControl" name="email" />
             </div>
             <div class="form-group">
               <label>Senha </label>
-              <input type="email" class="formControl" name="email" />
+              <input type="text" class="formControl" name="password" />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

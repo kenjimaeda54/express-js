@@ -1,7 +1,5 @@
 exports.globalMiddleware = (req, res, next) => {
-  if (req.body.client) {
-    res.send(req.body.client);
-  }
+  res.locals.erros = req.flash("erros");
   next();
 };
 

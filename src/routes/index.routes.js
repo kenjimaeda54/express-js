@@ -7,5 +7,6 @@ const login = require("../controllers/loginController");
 route.get("/", home.index);
 
 route.get("/login", login.index);
+route.post("/login/singRegister", login.loginRegister);
 
 module.exports = route;
