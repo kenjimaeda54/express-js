@@ -1,23 +1,23 @@
 ## MVC em Express
 
-Full MVC simples simuando agendas de contatos,com express,mongo db e ejs
+Full MVC simples simulando agendas de contatos, com express, mongo dB e ejs.
 
 ## Motovicao
-Realizar um curso para aprender conhecinemnto de Node js,repositorio aboradndno conhencimnto de full mvc em mongo db,express e ejs
+Realizar um curso para aprender anteconhecimento de Node js, repositório abordando conhecimento de full mvc em mongo db, express e ejs.
 
 ## Features
 MVC vem do Model View Controller
 
 - Model neste mvc foi mongoose.
-- Mongose e ODM, e uma modelagem de dados de objetos para Java script. 
-- Mongo db e banco de dados nao relacional,normalmente encontramos os ORM que sao para bancos como MYSQL
-- Mongoose vai falicitar a leitura,escrita,edicao de nossos dados no banco Mongo Db
+- Mongose e ODM, e uma modelagem de dados de objetos para Java script.
+- Mongo db e banco de dados não relacional, normalmente encontramos os ORM que são para bancos como MYSQL.
+- Mongoose vai facilitar a leitura, escrita, edição de nossos dados no banco Mongo Db.
 
 View 
 
 - View neste mvc foi a engine EJS
-- Sabemos que html puro nao possui controles de fluxos,for...
-- EJS deixa seu html dinamico e com super poderes````
+- Sabemos que html puro não possui controles de fluxos,for...
+- EJS deixa seu html dinâmico e com super poderes````
 - Abaixo seus principais tags 
 
 ``` text
@@ -39,18 +39,18 @@ View
 
 ```
 
-- Controller ficou por conta da logica js
-- Utilizei recursos de cokies para registrar sessoes
-- Apliquei midlewares nas variaveis locias que persistiam nas aplciacoes toda.
-- Exemplo de midlewares interesante e verificar se possui usuario logado,caso nao exista certas rotas nao era permetida
-- Midlewares sao funcoes que sao executadas antes de uma rota,logica com banco... ser exectuada
-- Abaixo apliquie um midleware glboal setando a variavel local e variaves de sessoes flash
-- As sesseoes flash ao inves dos cokkies sao limitadas,ideias para gerar erros de front end,exemplo caixa de texto que preenchido
-- Normalmente usamos os midlewares antes das rotas ser aplciadas,assim podemos interceptar e fazer oque desejamos antes de uma rota ser executada
-- Tabmem usei o recurso do csurf e uma lib para garantir a seguranca no aplicativo e nao permtir ataque de forca bruta em nossos htmls.
-- Midleware sao muito importatnes tambem para evitar repeticcoes de codigo,precisava aplicar o csurf em toda o sofwtare entao criei um midleware e ussei na conexao com o bancoe e tambem antes das rotas ser executadas
-- Para garantir que o sofwtare so vai ser iniciado abos o banco estiver pronto emiti um sinal,recurso do expreesss
-- Apos o sinal for emimti em    app.emit("appStarted"). O sofwtare vai ser iniicaod em  app.on("appStarted", () => {}); 
+-  A sigla C de controller, foi feito em  js
+- Utilizei recursos de cookies para registrar sessões.
+- Usei o princípio de  middlewares nas variáveis locais que persistiam na aplicação toda.
+- Cao de uso interesante dos middlewares , verificar se possui usuário logado, caso não exista, certas rotas não, era permitida.
+- Midlewares são funções executadas antes de uma rota, ser executada.
+- Abaixo apliquei um middleware  global setando a variável local e variáveis de sessões(flash).
+- As sessões flash ao invés dos cookies não  são permanentes, assim que atualizar o navegador se perde, ideial para gerar erros de front end.
+- Normalmente usamos os middleware  antes de as  rotas serem executadas, assim podemos interceptar e fazer oque desejamos.
+- Também usei o recurso do csurf e uma lib para garantir a segurança no software e não permitir ataque de força bruta em nossos htmls.
+- Midleware são muito importantes também para evitar repetições de código, precisava aplicar o csurf em toda o aplicativo então criei um midleware é usei na conexão com o banco, além de ser aplicado em cada rota
+- Para garantir que o software só vai ser iniciado quando banco estiver pronto emiti um sinal,  este recurso e do expreess
+- Apos o sinal for emitido em    app.emit("appStarted"). O sofwtare vai ser iniciado em  app.on("appStarted", () => {}); 
 
 ```javascript 
 
@@ -123,16 +123,16 @@ app.on("appStarted", () => {
 ```
 
 
-- Utilizamos variaveis de hambiente para configurar o banco
-- Depois configuramos as sessoes para ser usada,no caso do cokie precisamos dizer quanto tempo de vida ele vai possuir
-- Por boa praticas usamos o banco para armazenar esse cokie ao inves na memoria
-- As sessoes flahs para ser acessadas utilizamos a funcao flash("erros", contact.errors). Primeiro parametro e um valor de acesso da sua flash o segundo e valor proprimente dito da sua sessao
-- Exemplo se desejo renderizar o erro da sessao flahs em algum lugar especifico so usar flas("erros);
-- No examplo abaixo eu seto minhas memorias flash, e as recuperos no arquivos de view mensagens. Todas mensanges de erros estao concentrado neste arquivo
-- Intesante do ejs que permite composicao identico ao React,tudo que vai se repetir com freqeuencia eu apliquei composicao
-- Com include eu consigo fazer composicoes nos arquivos de view ejs
-- No arquivo de controllers na funcao  exports.loginIn  seto meu cokei  req.session.user = login.user e nos arquivos de midleware salvo em uma variavel local
-- Usando sessoes do banco consumo pouca memoria da maquina do usuario,ele vai possuir cokie so salvo quando estiver logado.
+- Utilizamos variáveis de ambiente para configurar o banco
+- Depois configuramos as sessões para ser usada, no caso do cookie precisamos dizer quanto tempo de vida ele vai possuir
+- Por boa práticas usamos o banco para armazenar esse cookie ao invés da memória
+- Para acessar  as mensagens flash utilizamos a   função flash("erros", contact.errors). Primeiro parâmetro e o valor para referenciar sua flash o segundo  é  valor.
+- Se desejo renderizar o erro da sessão flash em algum lugar específico só usar flash("erros);
+- No exemplo abaixo eu seto minhas memórias flash, e as recupero no arquivo de view "mensagens". Todas mensagens de erros e sucesso estão concentrado neste arquivo
+- Interessante do ejs que permite composição idêntico ao React, tudo que vai se repetir com frequência eu apliquei composição
+- Com include eu consigo fazer composições nos arquivos de view ejs
+- No arquivo de controllers na função  exports.loginIn  seto meu cookie  req.session.user = login.user e nos arquivos de midleware salvo em uma variável local
+- Usando sessões do banco consumo pouca memoria da máquina do usuário, ele vai possuir cookie só salvo quando estiver logado.
 
 ```javascript 
 
