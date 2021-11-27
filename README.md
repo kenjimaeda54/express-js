@@ -120,7 +120,7 @@ app.on("appStarted", () => {
 //com auxilio do csrf garnto usando este input o nao ataque de forca burta
         <input type="hidden" name="_csrf" value="<%= token  %>" />
 
-``
+```
 
 
 - Utilizamos variaveis de hambiente para configurar o banco
