@@ -3,7 +3,9 @@ const Login = require("../model/LoginModel");
 exports.index = (req, res) => {
   //redirecionando para paginas que lindam com sessoes e bom sempre ser
   //a partir do index
-  if (req.session.user) return res.render("log_in");
+  if (req.session.user) {
+    return res.render("logged");
+  }
   return res.render("login");
 };
 

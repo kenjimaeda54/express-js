@@ -18,5 +18,7 @@ route.get("/login/logout", login.logout);
 route.get("/contacts", haveUser, contacts.index);
 route.post("/contacts/register", haveUser, contacts.register);
 route.get("/contacts/:id", haveUser, contacts.getContactById);
+route.post("/contacts/edit/:id", haveUser, contacts.editContact);
+route.get("/contacts/delete/:id", haveUser, contacts.deleteContact);
 
 module.exports = route;

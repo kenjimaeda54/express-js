@@ -7,8 +7,14 @@
       <h1 class="text-center">Contatos</h1>
       <p class="text-center lead">Cadastre ou edite seus contatos</p>
       <%- include("../includes/mensagens");%>
-      <form action="/contacts/register" method="post">
+      <%  if(contact._id) { %>
+        <form action="/contacts/edit/<%= contact._id %>" method="post">   
+        <input type="hidden" name="_csrf" value="<%= token  %>" />     
+      <% } else { %>        
+        <form action="/contacts/register" method="post">
         <input type="hidden" name="_csrf" value="<%= token  %>" />
+    <%  }  %>
+
         <div class="form-group">
           <label>Nome </label>
           <input
@@ -45,7 +51,13 @@
             name="phone"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">
+          <% if(contact._id) { %>
+            Atualizar
+          <% } else { %>
+             Cadastrar
+          <% } %>
+        </button>
       </form>
     </div>
     <div class="col-lg-2"></div>

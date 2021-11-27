@@ -6,6 +6,7 @@ const ContactSchema = new mongoose.Schema({
   secondName: { type: String, required: false, default: "" },
   email: { type: String, required: false, default: "" },
   phone: { type: String, required: false, default: "" },
+  createdDate: { type: Date, default: Date.now },
 });
 
 const ContactModel = mongoose.model("contacts", ContactSchema);
@@ -15,17 +16,6 @@ function Contact(body) {
   this.errors = [];
   this.contact = null;
 }
-
-//funcao estatica nao precisa ser instanciada
-Contact.findContactById = async function (id) {
-  try {
-    if (typeof id !== "string") return;
-    const user = await ContactModel.findById(id);
-    return user;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 Contact.prototype.register = async function () {
   try {
@@ -46,6 +36,21 @@ Contact.prototype.validate = function () {
     return this.errors.push("Nao pode existir contato sem email ou telefone");
 };
 
+//precisa ser uma funcao aloca com prototype porque vamos precisar
+//dos outros metodos do objeto;
+Contact.prototype.editContact = async function (id) {
+  try {
+    if (typeof id !== "string") return;
+    this.validate();
+    if (this.errors.length > 0) return;
+    this.contact = await ContactModel.findByIdAndUpdate(id, this.body, {
+      new: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 Contact.prototype.cleanUp = function () {
   //estou garantindo uma string vazia;
   for (const key in this.body) {
@@ -61,6 +66,37 @@ Contact.prototype.cleanUp = function () {
     secondName: this.body.secondName,
     email: this.body.email,
   };
+};
+
+//membro estatico nao tem acesso ao this
+//funcao estatica nao precisa ser instanciada
+Contact.findContactById = async function (id) {
+  try {
+    if (typeof id !== "string") return;
+    const contacts = await ContactModel.findById(id);
+    return contacts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+Contact.getAllContacts = async function () {
+  try {
+    // -1 sera o ultimo da lista em primeiro
+    const contacts = await ContactModel.find().sort({ createdDate: 1 });
+    return contacts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+Contact.deleteContact = async function (id) {
+  try {
+    const contacts = await ContactModel.findByIdAndDelete({ _id: id });
+    return contacts;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = Contact;
