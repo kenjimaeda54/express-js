@@ -134,9 +134,9 @@ app.on("appStarted", () => {
 - No arquivo de controllers na funcao  exports.loginIn  seto meu cokei  req.session.user = login.user e nos arquivos de midleware salvo em uma variavel local
 - Usando sessoes do banco consumo pouca memoria da maquina do usuario,ele vai possuir cokie so salvo quando estiver logado.
 
-```javascrpit
-require("dotenv").config();
+```javascript 
 
+require("dotenv").config();
 
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -288,12 +288,6 @@ exports.globalMiddleware = (req, res, next) => {
   </div>
   <%- include("../includes/footer") %>
 </div>
-
-
-
-
-
-
 
 ```
 
