@@ -1,50 +1,52 @@
-const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
-const contactSchema = new mongoose.Schema({
+const ContactSchema = new mongoose.Schema({
   name: { type: String, required: true },
   secondName: { type: String, required: false, default: "" },
   email: { type: String, required: false, default: "" },
   phone: { type: String, required: false, default: "" },
-  createdDate: { type: Date, default: Date.now },
 });
 
-const ContactModel = mongoose.model("Contacts", contactSchema);
+const ContactModel = mongoose.model("contacts", ContactSchema);
 
 function Contact(body) {
   this.body = body;
-  this.erros = [];
+  this.errors = [];
   this.contact = null;
 }
 
 //funcao estatica nao precisa ser instanciada
-Contact.getById = async function (id) {
-  if (typeof id !== "string") return;
-  const user = await ContactModel.findById(id);
-  return user;
+Contact.findContactById = async function (id) {
+  try {
+    if (typeof id !== "string") return;
+    const user = await ContactModel.findById(id);
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 Contact.prototype.register = async function () {
-  this.validate();
-  if (this.erros.length > 0) return;
   try {
+    this.validate();
+    if (this.errors.length > 0) return;
     this.contact = await ContactModel.create(this.body);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
 Contact.prototype.validate = function () {
-  this.cleanup();
+  this.cleanUp();
   if (this.body.email && !validator.isEmail(this.body.email))
-    this.erros.push("Email inválido");
-  if (!this.body.name) this.erros.push("Contato precisa de nome");
+    this.errors.push("Email invalido");
+  if (!this.body.name) this.errors.push("Nome e obrigatorio");
   if (!this.body.email && !this.body.phone)
-    this.erros.push("Contato precisa de email ou telefone");
+    return this.errors.push("Nao pode existir contato sem email ou telefone");
 };
 
-Contact.prototype.cleanup = function () {
+Contact.prototype.cleanUp = function () {
   //estou garantindo uma string vazia;
   for (const key in this.body) {
     if (typeof this.body[key] !== "string") {
@@ -55,9 +57,9 @@ Contact.prototype.cleanup = function () {
   //montando um objeto novo;
   this.body = {
     name: this.body.name,
+    phone: this.body.phone,
     secondName: this.body.secondName,
     email: this.body.email,
-    phone: this.body.phone,
   };
 };
 
