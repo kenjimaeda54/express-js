@@ -248,8 +248,9 @@ exports.globalMiddleware = (req, res, next) => {
 </div>
 <%  } %>
 
-
-//index .js 
+```
+```ejs
+//index e.js 
 
 <%- include("../includes/head") %> <%- include("../includes/nav") %>
 
